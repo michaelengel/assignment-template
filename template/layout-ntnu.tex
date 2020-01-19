@@ -1,0 +1,242 @@
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{helvet}
+\usepackage{pslatex}
+\usepackage[pdftex]{graphicx}
+% \usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancyhdr}
+\usepackage[formats]{listings}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{totcount}
+%\usepackage{ifthen}
+\usepackage{scalefnt}
+\usepackage{wasysym}
+\usepackage{verbatim}
+%\usepackage[ruled]{algorithm2e}
+%\usepackage{algorithmic}
+\usepackage{subfigure}
+
+\usepackage{ngerman}
+\usepackage[ngerman]{datenumber}
+\usepackage{stmaryrd}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=blue,%
+    urlcolor=blue
+}
+
+% Page formatting
+\setlength{\parindent}{0cm}
+\setlength{\topmargin}{-50pt}
+\setlength{\textheight}{730pt}
+\setlength{\textwidth}{510pt}
+\setlength{\headheight}{32pt}
+\setlength{\headwidth}{510pt}
+\setlength{\oddsidemargin}{-30pt}
+\setlength{\evensidemargin}{-30pt}
+
+%% tabular double hline as one thick line
+\setlength{\doublerulesep}{0pt}
+
+% Font layout
+\renewcommand{\familydefault}{\sfdefault}
+
+% Header/footer layout
+\pagestyle{fancy}
+
+% <trim from left> <from bottom> <from right> <from top>
+% \lhead{ \includegraphics[width=5cm]{../template/ntnu-logo} }
+% \chead{ \includegraphics[width=2.9cm,trim=120 280 300 180, clip]{../Vorlagen/logo_fak} }
+\lhead{ \includegraphics[width=4.5cm, clip]{../template/ntnu-logo} }
+\rhead{ TDT4205\\
+Compiler Design}
+\chead{ Department of Computer Science -- IDI}
+\cfoot{} % Just to get rid of page numbering
+
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\bibliographystyle{alpha}
+
+% Problem (1/2)
+%
+%
+\makeatletter
+\newtotcounter{@points}
+\makeatother
+
+
+% The title
+%
+%
+\makeatletter
+
+\def\discussiond#1{\def\@discussiond{#1}}
+\discussiond{\color{red} No date defined}
+
+\def\authors#1{\def\@authors{#1}}
+\authors{\color{red} No authors defined}
+
+\def\about#1{\def\@about{#1}}
+\about{\color{red} No about defined}
+
+\def\semester#1{\def\@semester{#1}}
+\semester{\color{red} No semester defined}
+
+\def\exercisetitle#1{\def\@exercisetitle{#1}}
+\exercisetitle{\color{red} No exercise title defined}
+
+\def\exercisenumber#1{\def\@exercisenumber{#1}}
+\exercisenumber{\color{red} No exercise number defined}
+
+\def\exercisedeadlineday#1{\def\@exercisedeadlineday{#1}}
+\def\exercisedeadlinemonth#1{\def\@exercisedeadlinemonth{#1}}
+\def\exercisedeadlineyear#1{\def\@exercisedeadlineyear{#1}}
+\def\exercisedeadlinehour#1{\def\@exercisedeadlinehour{#1}}
+\def\exercisedeadlineminute#1{\def\@exercisedeadlineminute{#1}}
+
+\newif\ifhasdeadline
+
+\newcommand{\exercisedeadline}[5]{%
+\hasdeadlinetrue
+\exercisedeadlineday   {#1}
+\exercisedeadlinemonth {#2}
+\exercisedeadlineyear  {#3}
+\exercisedeadlinehour  {#4}
+\exercisedeadlineminute{#5}
+}
+
+\def\discussiondateday#1{\def\@discussiondateday{#1}}
+\def\discussiondatemonth#1{\def\@discussiondatemonth{#1}}
+\def\discussiondateyear#1{\def\@discussiondateyear{#1}}
+
+\newcommand{\discussiondate}[3]{%
+\hasdeadlinefalse
+\discussiondateday   {#1}
+\discussiondatemonth {#2}
+\discussiondateyear  {#3}
+}
+
+\renewcommand{\maketitle}{
+  {\scalefont{0.8}%
+    \begin{minipage}[t]{0.49\textwidth}
+      \vspace{-15pt}
+      \begin{tabular}{l}
+        \@authors
+      \end{tabular}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[t]{0.49\textwidth}
+      \vspace{-15pt} \flushright
+      \begin{tabular}{l}
+        \@about \\
+        \@semester
+      \end{tabular}
+    \end{minipage}%
+  }%
+  \vspace{0.6cm} \\
+  \begin{minipage}{\textwidth}
+    \centering \bf \scalefont{1.8}%
+    \@exercisetitle ~ \@exercisenumber \\
+    {\vspace{-10pt} \bf \small } % (\totalpoints ~ Punkte) }
+  \end{minipage}
+  \vspace{0.6cm} \\
+}
+\makeatother
+
+
+% Problem (2/2)
+%
+%
+\makeatletter
+\newcommand{\problem}[2]{
+  \addtocounter{@points}{#2}
+  \renewcommand{\thesection}{\@exercisenumber.\arabic{section}}
+  \ifnum#2<2
+    \def\pointstext{}
+    % \def\pointstext{Punkt}
+  \else
+    \def\pointstext{}
+    % \def\pointstext{Punkte}
+  \fi
+% \section{\bf #1 {(#2 \pointstext)}}
+\section{\bf #1} % {(#2 \pointstext)}}
+
+}
+\newcommand{\totalpoints}[0]{\total{@points}}
+\makeatother
+
+% Deadline or discussion date
+%
+%
+\makeatletter
+
+\ifhasdeadline
+\newcommand{\deadline}{%
+\setdatenumber%
+{\@exercisedeadlineyear}%
+{\@exercisedeadlinemonth}%
+{\@exercisedeadlineday}
+{\bf
+Abgabe bis spätestens
+\datedayname, \datedate,
+  \@exercisedeadlinehour:\@exercisedeadlineminute\ Uhr
+
+}
+}
+
+\else
+\newcommand{\deadline}{%
+{\bf
+Please submit solutions on Blackboard by
+\@discussiond
+\ 20:00h
+
+}
+}
+
+\fi
+
+\makeatother
+
+
+% Preamble
+%
+%
+\makeatletter
+\def\pretext#1{\def\@pretext{#1}}
+\newcommand{\preamble}{%
+  \maketitle
+  {\centering \deadline }
+  \vspace{10pt}
+  \begin{minipage}[t]{\textwidth}
+  \@pretext
+  \end{minipage}
+}
+\makeatother
+
+
+% Postamble
+%
+%
+\makeatletter
+\def\posttext#1{\def\@posttext{#1}}
+\newcommand{\postamble}{%
+\vfill
+\begin{figure}[b!]
+\begin{minipage}[!b]{\textwidth}
+\@posttext
+\end{minipage}
+\end{figure}
+
+}
+\makeatother

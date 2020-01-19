@@ -1,0 +1,84 @@
+\documentclass[11pt,a4paper]{article}
+
+\input{../template/layout-ntnu}
+
+\hypersetup{
+  pdftitle={Assignment 1},
+  pdfauthor={Michael Engel},
+  pdfsubject={Compiler Construction Spring 2020}
+}
+
+\authors{
+  \href{https://folk.ntnu.no/michaeng/tdt4205/}{https://folk.ntnu.no/michaeng/tdt4205/}\\
+  \href{mailto:michael.engel@ntnu.no}{michael.engel@ntnu.no}
+}
+
+\about {
+  Assignments for Compiler Construction
+}
+
+\semester        {Spring 2020}
+\exercisetitle   {Assignment}
+\exercisenumber  {1}
+\discussiond {Monday, 03.02.2020}
+
+
+\pretext{ {\footnotesize
+%    {\bf Notice:}
+%    The solutions to this assignment has to be submitted on Blackboard by the date stated above.
+  }
+}
+
+\posttext{
+  {\footnotesize
+  % {\bf General notes}
+  }
+}
+
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\begin{document}
+\selectlanguage{english}
+
+  \preamble
+
+  \problem{Regular languages}{0}
+
+  \begin{enumerate}
+
+  \item
+  Filenames in MS-DOS are restricted to the following format:
+
+  Up to eight characters for the name followed by a dot (``.'') and up to three characters for the extension.
+
+  Legal characters for DOS filenames include the following\footnote{In reality, some more characters are in fact
+  allowed, see \url{https://en.wikipedia.org/wiki/8.3_filename} -- but we didn't want the regexp to become
+  too complex.}:
+
+  \begin{itemize}
+  \item Upper case letters A–Z
+  \item Numbers 0–9
+  \item Space
+  \end{itemize}
+
+  Examples for valid names are \texttt{CONFIG.SYS}, \texttt{WORD.EXE}, but also \texttt{A FILE.123}
+
+  Build a regular expression that accepts MS-DOS filenames (no automaton required).
+  \end{enumerate}
+
+  \problem{NFAs and DFAs}{0}
+
+  \begin{enumerate}
+  \item
+  Construct an NFA that accepts the following regular expression: 
+
+  \begin{center}
+  \texttt{(mars | mass | miss)}
+  \end{center}
+
+  \end{enumerate}
+
+  \postamble
+
+\end{document}
+
